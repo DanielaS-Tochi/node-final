@@ -14,6 +14,13 @@ connection.connect((err) => {
         return;
     }
     console.log('Connected to the database');
-});
 
-module.exports = connection;
+    connection.query('SHOW TABLES', (err, results) => {
+        if (err) {
+            console.error('Error fetching tables:', err.stack);
+            return;
+        }
+        console.log('Tables in the database:', results);
+        connection.end();
+    });
+});
