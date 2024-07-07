@@ -1,1 +1,2 @@
-Usé node --watch en package json "start" en lugar de nodemon, probando...
+Notas:
+

@@ -16,4 +16,12 @@ connection.connect((err) => {
     console.log('Connected to the database');
 });
 
+connection.query('SHOW TABLES', (err, results) => {
+    if (err) {
+        console.error('Error realizando la consulta:', err);
+        return;
+    }
+    console.log('Tablas en la base de datos:', results);
+    connection.end();
+})
 module.exports = connection;

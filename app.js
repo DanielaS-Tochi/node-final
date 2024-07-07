@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const crudRoutes = require('./routes/crudRoutes');
+const port = 4000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -10,9 +10,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Usar las rutas del CRUD
-app.use('/api', crudRoutes);
+app.use('/api/users', require('./routes/crudRoutes'));
 
-app.listen(4000, () => {
-    console.log('Server is running on port 4000');
+app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
 });
 
