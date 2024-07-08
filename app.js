@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const mysql = require('mysql2');
 const path = require('path');
 const port = 4000;
 
@@ -12,6 +13,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 //Usar las rutas del CRUD
 const crudRoutes = require('./routes/crudRoutes');
 app.use('/users', crudRoutes);
+
+const crudController = require('./controllers/crudController');
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));

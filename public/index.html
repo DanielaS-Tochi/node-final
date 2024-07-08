@@ -22,7 +22,51 @@
         <button type="submit">Crear Usuario</button>
 
     </form>
-    <script src="app.js"></script>
+    <h2>Lista de Usuarios</h2>
+    <ul id="userList"></ul>
+    <script src="app.js">
+        document.getElementById('createUserForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const id = document.getElementById('id').value;
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            fetch('/users', {
+                method: 'POST',
+                headers: {
+                    'ContentType': 'application/json',
+                },
+                body: JSON.stringify({ id, name, email }),
+            })
+                .then(response =>
+                    response.text())
+                .then(data => {
+                    console.log('Success:', data);
+                    loadUsers(); //después de crear un nuevo usuario, recarga la lista de usuarios
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        });
+
+        function loadUsers() {
+            fetch('/users')
+                .then(response => response.json())
+                .then(users => {
+                    const userList = document.getElementById('userList');
+                    userList.innerHTML = "";
+                    users.forEach(user => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = `${user.id} - ${user.name} - ${user.email}`;
+                        userList.appendChild(listItem);
+                    });
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        }
+        window.onload = loadUsers;
+
+    </script>
 </body>
 
 </html>
