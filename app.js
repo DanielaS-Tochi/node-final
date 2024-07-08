@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/users', (req, res) => {
-    const {name, email} = req.body;
+    const { name, email } = req.body;
     console.log(`${name}, Email: ${email}`);
     res.send('Usuario creado correctamente');
 });
