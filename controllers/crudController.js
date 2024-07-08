@@ -12,15 +12,36 @@ exports.getAllUsers = (req, res) => {
 
 //Crear un nuevo usuario
 exports.createUser = (req, res) => {
-    const { name, email } = req.body;
-    connection.query('INSERT INTO users (name, email) VALUES (?, ?)', [name, email], (err, results) => {
-        if (err) {
-            return res.status(500).send(err);
+    const { id, name, email } = req.body;
+
+    if (!id || !name || !email) {
+        return
+        res.status(400).json({ error: "Todos los campos son requeridos" });
+    }
+    connection.query('INSERT INTO users(id,name,email) VALUES (?, ?, ?)', [id, name, email], (error, results) => {
+        if (error) {
+            console.error('Error al insertar usuario:', error);
+            return
+            res.status(500).json({ error: 'Error interno al crear usuario' });
         }
-        res.status(201).send('User created');
+        res.status(201).json({ message: 'Usuario creado correctamente', userId: results.insertId })
     });
 };
 
+
+//Obtener un usuario por Id
+exports.getUserById = (req, res) => {
+    const userId = req.params.id;
+    connection.query('SELECT * FROM users WHERE id= ?', [userId], (err, results) => {
+        if (err) {
+            return res.status(500).json({ err: error.message });
+        }
+        if (results.length === 0) {
+            return res.status(404).json({ err: 'User not found' });
+        }
+        res.json(results[0]);
+    });
+};
 //Actualizar un usuario
 exports.updateUser = (req, res) => {
     const { id } = req.params;

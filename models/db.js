@@ -1,5 +1,7 @@
 const mysql = require('mysql2');
-require('dotenv').config();
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 const connection = mysql.createConnection({
     host: process.env.DB_HOST,
@@ -10,18 +12,18 @@ const connection = mysql.createConnection({
 
 connection.connect((err) => {
     if (err) {
-        console.error('Error connecting to the database: ', err.stack);
+        console.error('Error connecting to the database: ', err);
         return;
     }
     console.log('Connected to the database');
 });
 
-connection.query('SHOW TABLES', (err, results) => {
-    if (err) {
-        console.error('Error realizando la consulta:', err);
-        return;
-    }
-    console.log('Tablas en la base de datos:', results);
-    connection.end();
-})
+// connection.query('SHOW TABLES', (err, results) => {
+//     if (err) {
+//         console.error('Error realizando la consulta:', err);
+//         return;
+//     }
+//     console.log('Tablas en la base de datos:', results);
+//     connection.end();
+// })
 module.exports = connection;

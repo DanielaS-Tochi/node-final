@@ -3,9 +3,10 @@ const router = express.Router();
 const crudController = require('../controllers/crudController');
 
 //Rutas para el CRUD de users
-router.get('/users', crudController.getAllUsers);
-router.post('/users', crudController.createUser);
-router.put('/users/:id', crudController.updateUser);
-router.delete('/users/:id', crudController.deleteUser);
+router.get('/', crudController.getAllUsers);
+router.post('/', crudController.createUser);
+router.get('/:id', crudController.getUserById);
+router.put('/:id', crudController.updateUser);
+router.delete('/:id', crudController.deleteUser);
 
 module.exports = router;

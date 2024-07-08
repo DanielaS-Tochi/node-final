@@ -23,7 +23,7 @@
 
             // Obtener todos los usuarios
             function getUsers() {
-                fetch('/api/users')
+                fetch('/users')
                     .then(response => response.json())
                     .then(data => {
                         userList.innerHTML = '';
@@ -45,7 +45,7 @@
                     email: formData.get('email')
                 };
 
-                fetch('/api/users', {
+                fetch('/users', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
