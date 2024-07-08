@@ -10,11 +10,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Usar las rutas del CRUD
-const userRoutes = require('./routes/crudRoutes');
-app.use('/users', userRoutes);
+const crudRoutes = require('./routes/crudRoutes');
+app.use('/users', crudRoutes);
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.post('/users', (req, res) => {
+    const {name, email} = req.body;
+    console.log(`${name}, Email: ${email}`);
+    res.send('Usuario creado correctamente');
 });
 
 app.listen(port, () => {
