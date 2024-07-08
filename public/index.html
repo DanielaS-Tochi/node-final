@@ -4,11 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear Usuario</title>
+    <title>Gestion de Usuarios</title>
 </head>
 
 <body>
-    <h1>Crear Usuario</h1>
+    <h1>Gestionar usuarios</h1>
+    <h2>Crear Usuario</h2>
     <form id="createUserForm" action='/users' method="POST">
         <label for="id">Id:</label>
         <input type="text" id="id" name="id" required>
@@ -22,50 +23,8 @@
         <button type="submit">Crear Usuario</button>
 
     </form>
-    <h2>Lista de Usuarios</h2>
-    <ul id="userList"></ul>
+
     <script src="app.js">
-        document.getElementById('createUserForm').addEventListener('submit', function (event) {
-            event.preventDefault();
-            const id = document.getElementById('id').value;
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            fetch('/users', {
-                method: 'POST',
-                headers: {
-                    'ContentType': 'application/json',
-                },
-                body: JSON.stringify({ id, name, email }),
-            })
-                .then(response =>
-                    response.text())
-                .then(data => {
-                    console.log('Success:', data);
-                    loadUsers(); //después de crear un nuevo usuario, recarga la lista de usuarios
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
-        });
-
-        function loadUsers() {
-            fetch('/users')
-                .then(response => response.json())
-                .then(users => {
-                    const userList = document.getElementById('userList');
-                    userList.innerHTML = "";
-                    users.forEach(user => {
-                        const listItem = document.createElement('li');
-                        listItem.textContent = `${user.id} - ${user.name} - ${user.email}`;
-                        userList.appendChild(listItem);
-                    });
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
-        }
-        window.onload = loadUsers;
-
     </script>
 </body>
 
