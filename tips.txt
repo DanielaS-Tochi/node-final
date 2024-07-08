@@ -1,2 +1,77 @@
 Notas:
 
+html primer versión
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD App</title>
+</head>
+
+<body>
+    <h1>CRUD App</h1>
+    <form id="userForm">
+        <input type="text" name="name" placeholder="Name" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <button type="submit">Create User</button>
+    </form>
+    <ul id="userList"></ul>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('userForm');
+            const userList = document.getElementById('userList');
+
+            // Obtener todos los usuarios
+            function getUsers() {
+                fetch('/users')
+                    .then(response => response.json())
+                    .then(data => {
+                        userList.innerHTML = '';
+                        data.forEach(user => {
+                            const li = document.createElement('li');
+                            li.textContent = `${user.name} - ${user.email}`;
+                            userList.appendChild(li);
+                        });
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+
+            // Crear un nuevo usuario
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                const formData = new FormData(form);
+                const user = {
+                    name: formData.get('name'),
+                    email: formData.get('email')
+                };
+
+                fetch('/users', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(user)
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json();
+                        } else {
+                            throw new Error('Error en la creación del usuario');
+                        }
+                    })
+                    .then(data => {
+                        console.log('Success:', data);
+                        getUsers();
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+            getUsers();
+        });
+    </script>
+</body>
+
+</html>
