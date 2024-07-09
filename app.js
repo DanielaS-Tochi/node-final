@@ -7,10 +7,8 @@ const port = 4000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-//Serve static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-//Usar las rutas del CRUD
 const crudRoutes = require('./routes/crudRoutes');
 app.use('/users', crudRoutes);
 
