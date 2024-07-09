@@ -24,7 +24,7 @@ exports.createUser = (req, res) => {
             return
             res.status(500).json({ error: 'Error interno al crear usuario' });
         }
-        res.status(201).json({ message: 'Usuario creado correctamente', userId: results.insertId })
+        res.status(201).json({ message: 'Usuario creado correctamente', id, name, email });
     });
 };
 
